@@ -113,11 +113,15 @@ body {
     overflow: visible;
 }
 
-/* Chaque coin positionné et orienté différemment */
-.lottie-tl { top: -25px;    left: -25px;  transform: scale(1, 1);   }
-.lottie-tr { top: -25px;    right: -25px; transform: scale(-1, 1);  }
-.lottie-bl { bottom: -25px; left: -25px;  transform: scale(1, -1);  }
-.lottie-br { bottom: -25px; right: -25px; transform: scale(-1, -1); }
+/* Coins — positionnés et colorés différemment */
+.lottie-tl { top: -25px;    left: -25px;  transform: scale(1, 1);   filter: hue-rotate(0deg)   saturate(1.2); }
+.lottie-tr { top: -25px;    right: -25px; transform: scale(-1, 1);  filter: hue-rotate(40deg)  saturate(1.4) brightness(1.1); }
+.lottie-bl { bottom: -25px; left: -25px;  transform: scale(1, -1);  filter: hue-rotate(200deg) saturate(1.3) brightness(0.95); }
+.lottie-br { bottom: -25px; right: -25px; transform: scale(-1, -1); filter: hue-rotate(300deg) saturate(1.2) brightness(1.05); }
+
+/* 2 décos bas milieu (lottie 2) */
+.lottie-bot-l { bottom: -20px; left: calc(50% - 100px); filter: hue-rotate(160deg) saturate(1.5) brightness(1.1); }
+.lottie-bot-r { bottom: -20px; left: calc(50% + 10px);  filter: hue-rotate(260deg) saturate(1.3) brightness(1.0); }
 
 /* ---- Bordures néon ---- */
 .frame-edge {
