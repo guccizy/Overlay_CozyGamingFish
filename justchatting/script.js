@@ -11,10 +11,11 @@ const USER_COLORS = [
 ];
 
 // ============================================================
-//  CANVAS AQUARIUM IMMERSIF
+//  CANVAS AQUARIUM (désactivé — géré par OBS en source séparée)
 // ============================================================
 
 function initAquarium() {
+    return; // Le fond aquarium est une source vidéo OBS distincte
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');

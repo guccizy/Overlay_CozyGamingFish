@@ -27,19 +27,6 @@ body {
 }
 
 /* ============================================================
-   CANVAS — Aquarium plein écran
-============================================================ */
-
-#bg-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 1920px;
-    height: 1080px;
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* ============================================================
    RÉSEAUX SOCIAUX (haut droite)
 ============================================================ */
 
@@ -87,39 +74,86 @@ body {
 .social-pill.tiktok    svg { color: #00f2ea; filter: drop-shadow(0 0 4px rgba(0,242,234,0.8)); }
 
 /* ============================================================
-   CHAT — Glassmorphism, gauche
+   CHAT — Écran maritime incliné en 3D perspective
 ============================================================ */
 
-.chat-panel {
+/* Wrapper qui porte la perspective et l'inclinaison */
+.chat-panel-wrapper {
     position: fixed;
-    left: 24px;
-    top: 80px;
-    bottom: 80px;
-    width: 340px;
-    display: flex;
-    flex-direction: column;
+    left: 30px;
+    top: 90px;
     z-index: 20;
-
-    background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    box-shadow:
-        0 8px 32px rgba(0,0,0,0.4),
-        0 0 0 1px rgba(255,255,255,0.04) inset,
-        0 0 30px var(--glow-cyan);
-
-    overflow: hidden;
+    /* Perspective pour l'effet 3D */
+    perspective: 900px;
+    perspective-origin: 50% 50%;
 }
 
-/* Reflet haut du verre */
+.chat-panel {
+    width: 340px;
+    height: 860px;
+    display: flex;
+    flex-direction: column;
+
+    /* Inclinaison 3D : légèrement tourné vers la droite, penché vers l'arrière */
+    transform: rotateY(8deg) rotateX(4deg);
+    transform-style: preserve-3d;
+    transform-origin: left center;
+
+    /* L'image de l'écran maritime sera en background (à définir quand tu envoies l'image) */
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow:
+        /* Ombre portée 3D à droite et en bas */
+        8px 16px 40px rgba(0,0,0,0.7),
+        -2px -2px 0px rgba(255,255,255,0.06) inset,
+        0 0 25px var(--glow-cyan),
+        /* Reflet de côté droit (effet épaisseur d'écran) */
+        4px 0 0 rgba(0,180,255,0.12);
+
+    overflow: hidden;
+    /* Animation de lévitation subtile */
+    animation: screenFloat 5s ease-in-out infinite;
+}
+
+@keyframes screenFloat {
+    0%, 100% { transform: rotateY(8deg) rotateX(4deg) translateY(0px); }
+    50%       { transform: rotateY(7deg) rotateX(3.5deg) translateY(-5px); }
+}
+
+/* Scanlines effet écran */
+.chat-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+    border-radius: 16px;
+}
+
+/* Reflet lumineux sur la vitre de l'écran */
 .chat-panel::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    height: 40%;
+    background: linear-gradient(180deg,
+        rgba(255,255,255,0.06) 0%,
+        rgba(255,255,255,0.02) 40%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 9;
+    border-radius: 16px 16px 0 0;
 }
 
 .chat-header {

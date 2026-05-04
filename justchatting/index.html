@@ -10,9 +10,6 @@
 </head>
 <body>
 
-    <!-- FOND AQUARIUM ANIMÉ (canvas plein écran) -->
-    <canvas id="bg-canvas"></canvas>
-
     <!-- RÉSEAUX SOCIAUX (haut droite, discrets) -->
     <div class="socials-bar">
         <div class="social-pill twitch">
@@ -41,13 +38,15 @@
         </div>
     </div>
 
-    <!-- CHAT (gauche, glassmorphism) -->
-    <div class="chat-panel">
-        <div class="chat-header">
-            <div class="chat-live-dot"></div>
-            <span class="chat-title">Live Chat</span>
+    <!-- CHAT (gauche, écran maritime 3D) -->
+    <div class="chat-panel-wrapper">
+        <div class="chat-panel">
+            <div class="chat-header">
+                <div class="chat-live-dot"></div>
+                <span class="chat-title">Live Chat</span>
+            </div>
+            <div class="chat-messages" id="chat-messages"></div>
         </div>
-        <div class="chat-messages" id="chat-messages"></div>
     </div>
 
     <!-- ZONE ALERTES (sous le chat) -->
