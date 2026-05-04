@@ -386,17 +386,16 @@ window.addEventListener('onEventReceived', function (obj) {
 // ============================================================
 
 function initLottieCorners() {
-    const animData = {
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'lottie_ocean.json'
-    };
-
     ['lottie-corner-tr', 'lottie-corner-br'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-            bodymovin.loadAnimation({ ...animData, container: el });
+        if (el && window.lottieOceanData) {
+            bodymovin.loadAnimation({
+                container: el,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                animationData: window.lottieOceanData
+            });
         }
     });
 }
