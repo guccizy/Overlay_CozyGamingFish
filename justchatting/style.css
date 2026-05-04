@@ -23,9 +23,11 @@ body {
     width: 1920px;
     height: 1080px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
     position: relative;
+    /* Grid : topbar / zone centrale / bottombar */
+    display: grid;
+    grid-template-rows: var(--topbar-h) 1fr var(--bottombar-h);
+    grid-template-columns: 1fr;
 }
 
 /* ============================================================
@@ -48,6 +50,7 @@ body {
 .topbar {
     position: relative;
     z-index: 20;
+    grid-row: 1;
     height: var(--topbar-h);
     display: flex;
     align-items: center;
@@ -144,28 +147,27 @@ body {
 .main-area {
     position: relative;
     z-index: 10;
-    flex: 1;
     overflow: hidden;
-    /* Hauteur exacte = 1080 - topbar - bottombar */
-    height: calc(1080px - var(--topbar-h) - var(--bottombar-h));
+    /* Prend la ligne du milieu dans le grid body */
+    grid-row: 2;
 }
 
 /* ============================================================
-   CAM AU CENTRE (absolue, centrée, transparente)
+   CAM AU CENTRE — position absolute dans main-area,
+   centrée avec top/left/transform
 ============================================================ */
 
 .cam-center {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1;
+    pointer-events: none;
 }
 
 /* ============================================================
-   CHAT (GAUCHE, flottant par-dessus)
+   CHAT (GAUCHE, flottant par-dessus la cam)
 ============================================================ */
 
 .chat-panel {
@@ -507,6 +509,7 @@ body {
 .bottombar {
     position: relative;
     z-index: 20;
+    grid-row: 3;
     height: var(--bottombar-h);
     display: flex;
     align-items: center;
