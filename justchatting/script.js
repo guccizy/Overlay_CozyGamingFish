@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    CozyGamingFish — Just Chatting Immersif
 ============================================================ */
 
@@ -391,15 +391,35 @@ window.addEventListener('onEventReceived', function (obj) {
 function initLottieCorners() {
     ['lottie-corner-tr', 'lottie-corner-br'].forEach(id => {
         const el = document.getElementById(id);
-        if (el && window.lottieOceanData) {
-            bodymovin.loadAnimation({
-                container: el,
-                renderer: 'svg',
-                loop: true,
-                autoplay: true,
-                animationData: window.lottieOceanData
-            });
+        if (!el || !window.lottieOceanData) return;
+
+        const anim = bodymovin.loadAnimation({
+            container: el,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            animationData: window.lottieOceanData
+        });
+
+        // Joue une fois au chargement
+        anim.play();
+
+        // Puis se relance aléatoirement toutes les 8 à 20 secondes
+        function scheduleNext() {
+            const delay = 8000 + Math.random() * 12000;
+            setTimeout(() => {
+                anim.goToAndPlay(0, true);
+                anim.addEventListener('complete', function onDone() {
+                    anim.removeEventListener('complete', onDone);
+                    scheduleNext();
+                });
+            }, delay);
         }
+
+        anim.addEventListener('complete', function onFirst() {
+            anim.removeEventListener('complete', onFirst);
+            scheduleNext();
+        });
     });
 }
 
