@@ -77,11 +77,22 @@
         </div><!-- /.screen-frame -->
     </div><!-- /.chat-panel-wrapper -->
 
-    <!-- ZONE ALERTES (sous le chat) -->
-    <div class="alert-zone" id="alert-zone" style="display:none;">
-        <div class="alert-bubble" id="alert-bubble">
-            <div class="alert-icon" id="alert-icon">🐟</div>
-            <div class="alert-text" id="alert-text"></div>
+    <!-- NOTIFICATION OVERLAY (centre écran, follow/sub) -->
+    <div class="notif-overlay" id="notif-overlay">
+        <div class="notif-card" id="notif-card">
+            <!-- Bulles décoratives -->
+            <div class="notif-bubble nb1"></div>
+            <div class="notif-bubble nb2"></div>
+            <div class="notif-bubble nb3"></div>
+            <!-- Contenu -->
+            <div class="notif-icon" id="notif-icon">🎣</div>
+            <div class="notif-body">
+                <div class="notif-title" id="notif-title">Nouveau Follow !</div>
+                <div class="notif-name" id="notif-name">—</div>
+                <div class="notif-sub" id="notif-sub">vient de rejoindre l'aquarium 🐟</div>
+            </div>
+            <!-- Barre de progression -->
+            <div class="notif-progress" id="notif-progress"></div>
         </div>
     </div>
 

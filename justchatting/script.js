@@ -282,36 +282,50 @@ function addMessage(user, message, flags) {
 }
 
 // ============================================================
-//  ALERTES FLUIDES
+//  NOTIFICATION FOLLOW / SUB
 // ============================================================
 
-let alertTimeout = null;
+let notifTimeout = null;
 
-function showAlert(icon, text) {
-    const zone   = document.getElementById('alert-zone');
-    const iconEl = document.getElementById('alert-icon');
-    const textEl = document.getElementById('alert-text');
+function showNotif({ icon, title, name, sub, isGold = false }) {
+    const overlay   = document.getElementById('notif-overlay');
+    const progress  = document.getElementById('notif-progress');
+    if (!overlay) return;
 
-    if (!zone) return;
-
-    if (alertTimeout) {
-        clearTimeout(alertTimeout);
-        zone.style.display = 'none';
+    // Reset si déjà visible
+    if (notifTimeout) {
+        clearTimeout(notifTimeout);
+        overlay.classList.remove('visible', 'hiding');
     }
 
-    iconEl.textContent = icon;
-    textEl.textContent = text;
-    zone.style.display = 'block';
+    // Remplir le contenu
+    document.getElementById('notif-icon').textContent  = icon;
+    document.getElementById('notif-title').textContent = title;
+    document.getElementById('notif-name').textContent  = name;
+    document.getElementById('notif-sub').textContent   = sub;
 
-    const bubble = document.getElementById('alert-bubble');
-    bubble.style.animation = 'none';
-    void bubble.offsetWidth;
-    bubble.style.animation = 'alertPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+    // Couleur spéciale sub (dorée)
+    const card = overlay.querySelector('.notif-card');
+    card.style.borderTopColor = isGold ? '#FFD700' : 'var(--c-orange)';
+    card.style.boxShadow = isGold
+        ? '0 20px 50px rgba(0,0,0,0.7), 0 0 35px rgba(255,215,0,0.4), inset 0 0 30px rgba(255,215,0,0.05)'
+        : '0 20px 50px rgba(0,0,0,0.7), 0 0 30px var(--glow-orange), inset 0 0 30px rgba(32,135,181,0.08)';
 
-    alertTimeout = setTimeout(() => {
-        bubble.style.animation = 'alertFade 0.5s ease forwards';
-        setTimeout(() => { zone.style.display = 'none'; }, 500);
-    }, 5000);
+    // Reset barre de progression
+    progress.style.animation = 'none';
+    void progress.offsetWidth;
+
+    // Afficher
+    void overlay.offsetWidth;
+    overlay.classList.add('visible');
+
+    // Masquer après 5s
+    notifTimeout = setTimeout(() => {
+        overlay.classList.add('hiding');
+        setTimeout(() => {
+            overlay.classList.remove('visible', 'hiding');
+        }, 500);
+    }, 5500);
 }
 
 // ============================================================
@@ -374,12 +388,24 @@ window.addEventListener('onEventReceived', function (obj) {
 
     if (listener === 'follower-latest') {
         document.getElementById('last-follower').textContent = name;
-        showAlert('🎣', `${name} vient de follow ! Bienvenue 🐟`);
+        showNotif({
+            icon:  '🎣',
+            title: 'Nouveau Follow !',
+            name:  name,
+            sub:   'vient de rejoindre l\'aquarium 🐟',
+            isGold: false,
+        });
     }
 
     if (listener === 'subscriber-latest') {
         document.getElementById('last-sub').textContent = name;
-        showAlert('⭐', `${name} vient de sub ! Merci du fond de l'aquarium 🐠`);
+        showNotif({
+            icon:  '⭐',
+            title: 'Nouveau Sub !',
+            name:  name,
+            sub:   'merci du fond de l\'aquarium 🐠✨',
+            isGold: true,
+        });
         spawnGoldBubbles();
     }
 });
