@@ -146,19 +146,22 @@ body {
     z-index: 10;
     flex: 1;
     overflow: hidden;
+    /* Hauteur exacte = 1080 - topbar - bottombar */
+    height: calc(1080px - var(--topbar-h) - var(--bottombar-h));
 }
 
 /* ============================================================
-   CAM AU CENTRE (occupe toute la zone centrale, transparent)
+   CAM AU CENTRE (absolue, centrée, transparente)
 ============================================================ */
 
 .cam-center {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    z-index: 1;
 }
 
 /* ============================================================
@@ -177,6 +180,7 @@ body {
     background: linear-gradient(180deg, rgba(6,24,40,0.88) 0%, rgba(6,24,40,0.75) 100%);
     border-right: 1px solid rgba(32,135,181,0.2);
     box-shadow: 4px 0 30px rgba(0,0,0,0.4);
+    z-index: 5;
 }
 
 /* Bordure lumineuse animée sur le côté droit du chat */
@@ -342,9 +346,11 @@ body {
 
 .webcam-container {
     position: relative;
-    width: 900px;
-    height: 618px;
-    padding: 48px 48px 78px 48px;
+    /* 16:9 qui occupe bien l'espace central disponible */
+    width: 854px;
+    height: 480px;
+    /* padding pour laisser de la place au cadre + nameplate */
+    padding: 44px 44px 72px 44px;
     display: flex;
     justify-content: center;
     align-items: center;
