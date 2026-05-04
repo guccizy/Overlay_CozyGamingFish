@@ -44,60 +44,11 @@
         <!-- Cadre décoratif SVG aquatique -->
         <div class="screen-frame">
 
-            <!-- Coin haut gauche -->
-            <svg class="corner corner-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 110 Q10 10 110 10" stroke="url(#cyanGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path d="M18 110 Q18 18 110 18" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
-                <!-- Corail coin -->
-                <ellipse cx="22" cy="95" rx="5" ry="12" fill="#FF6B9D" opacity="0.85"/>
-                <ellipse cx="16" cy="88" rx="4" ry="9" fill="#FF4D8D" opacity="0.75"/>
-                <ellipse cx="30" cy="98" rx="4" ry="8" fill="#FF8CB4" opacity="0.8"/>
-                <!-- Algue -->
-                <path d="M35 110 Q38 95 32 80 Q36 68 30 55" stroke="#00C9A7" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path d="M42 110 Q46 97 40 84 Q44 70 38 58" stroke="#00A896" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                <!-- Petite étoile de mer -->
-                <path d="M55 105 L57 99 L60 105 L54 101 L62 101 Z" fill="#FFD700" opacity="0.9"/>
-                <!-- Bulle déco -->
-                <circle cx="70" cy="85" r="5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
-                <circle cx="68.5" cy="83.5" r="1.2" fill="rgba(255,255,255,0.6)"/>
-                <circle cx="58" cy="72" r="3.5" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1.2"/>
-                <defs>
-                    <linearGradient id="cyanGrad" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#00D4FF"/>
-                        <stop offset="100%" stop-color="#0088CC"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-
-            <!-- Coin haut droit — Lottie poisson animé -->
-            <div id="lottie-corner-tr" class="corner corner-tr lottie-corner"></div>
-
-            <!-- Coin bas gauche -->
-            <svg class="corner corner-bl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 10 Q10 110 110 110" stroke="url(#cyanGrad3)" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path d="M18 10 Q18 102 110 102" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
-                <!-- Gros corail bas -->
-                <ellipse cx="50" cy="95" rx="7" ry="18" fill="#FF4D8D" opacity="0.9"/>
-                <ellipse cx="40" cy="100" rx="5" ry="13" fill="#FF6B9D" opacity="0.8"/>
-                <ellipse cx="62" cy="98" rx="5" ry="14" fill="#C4338C" opacity="0.8"/>
-                <ellipse cx="72" cy="105" rx="4" ry="9" fill="#FF8CB4" opacity="0.75"/>
-                <!-- Anémone -->
-                <circle cx="35" cy="82" r="6" fill="#FF7B00" opacity="0.7"/>
-                <circle cx="28" cy="78" r="4" fill="#FF9D3A" opacity="0.7"/>
-                <circle cx="42" cy="80" r="4" fill="#FFC060" opacity="0.65"/>
-                <!-- Coquillage -->
-                <path d="M80 108 Q88 100 95 108 Q88 116 80 108" fill="#C8A882" opacity="0.8"/>
-                <path d="M84 108 Q88 103 92 108" stroke="#A0896A" stroke-width="1" fill="none"/>
-                <defs>
-                    <linearGradient id="cyanGrad3" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#00D4FF"/>
-                        <stop offset="100%" stop-color="#FF7B00" stop-opacity="0.6"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-
-            <!-- Coin bas droit — Lottie poisson animé (miroir) -->
-            <div id="lottie-corner-br" class="corner corner-br lottie-corner"></div>
+            <!-- 4 coins Lottie, 1 par coin -->
+            <div id="lottie-corner-tl" class="lottie-corner lottie-tl"></div>
+            <div id="lottie-corner-tr" class="lottie-corner lottie-tr"></div>
+            <div id="lottie-corner-bl" class="lottie-corner lottie-bl"></div>
+            <div id="lottie-corner-br" class="lottie-corner lottie-br"></div>
 
             <!-- Bordures latérales top/bottom avec néons -->
             <div class="frame-edge frame-top"></div>

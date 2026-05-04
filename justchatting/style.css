@@ -103,27 +103,21 @@ body {
     50%       { transform: rotateY(9deg)  rotateX(2.5deg) translateY(-6px); }
 }
 
-/* ---- Coins SVG décoratifs ---- */
-.corner {
+/* ---- Coins Lottie — 1 par coin, répartis ---- */
+.lottie-corner {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     z-index: 5;
     pointer-events: none;
-}
-.corner-tl { top: 0;    left: 0; }
-.corner-tr { top: 0;    right: 0; transform: scaleX(-1); }
-.corner-bl { bottom: 0; left: 0;  transform: scaleY(-1); }
-.corner-br { bottom: 0; right: 0; transform: scale(-1,-1); }
-
-/* Coins Lottie — taille plus grande pour bien voir l'animation */
-.lottie-corner {
-    width: 160px;
-    height: 160px;
     overflow: visible;
 }
-#lottie-corner-tr { top: -20px; right: -20px; transform: scaleX(-1); }
-#lottie-corner-br { bottom: -20px; right: -20px; transform: scale(-1,-1); }
+
+/* Chaque coin positionné et orienté différemment */
+.lottie-tl { top: -25px;    left: -25px;  transform: scale(1, 1);   }
+.lottie-tr { top: -25px;    right: -25px; transform: scale(-1, 1);  }
+.lottie-bl { bottom: -25px; left: -25px;  transform: scale(1, -1);  }
+.lottie-br { bottom: -25px; right: -25px; transform: scale(-1, -1); }
 
 /* ---- Bordures néon ---- */
 .frame-edge {

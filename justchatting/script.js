@@ -389,7 +389,15 @@ window.addEventListener('onEventReceived', function (obj) {
 // ============================================================
 
 function initLottieCorners() {
-    ['lottie-corner-tr', 'lottie-corner-br'].forEach(id => {
+    // Délais de départ décalés pour que les 4 coins ne jouent pas en même temps
+    const corners = [
+        { id: 'lottie-corner-tl', startDelay: 0 },
+        { id: 'lottie-corner-tr', startDelay: 3000 },
+        { id: 'lottie-corner-bl', startDelay: 6000 },
+        { id: 'lottie-corner-br', startDelay: 9000 },
+    ];
+
+    corners.forEach(({ id, startDelay }) => {
         const el = document.getElementById(id);
         if (!el || !window.lottieOceanData) return;
 
@@ -401,12 +409,9 @@ function initLottieCorners() {
             animationData: window.lottieOceanData
         });
 
-        // Joue une fois au chargement
-        anim.play();
-
-        // Puis se relance aléatoirement toutes les 8 à 20 secondes
         function scheduleNext() {
-            const delay = 8000 + Math.random() * 12000;
+            // Entre 10 et 25 secondes entre chaque animation
+            const delay = 10000 + Math.random() * 15000;
             setTimeout(() => {
                 anim.goToAndPlay(0, true);
                 anim.addEventListener('complete', function onDone() {
@@ -416,10 +421,14 @@ function initLottieCorners() {
             }, delay);
         }
 
-        anim.addEventListener('complete', function onFirst() {
-            anim.removeEventListener('complete', onFirst);
-            scheduleNext();
-        });
+        // Premier déclenchement décalé par coin
+        setTimeout(() => {
+            anim.play();
+            anim.addEventListener('complete', function onFirst() {
+                anim.removeEventListener('complete', onFirst);
+                scheduleNext();
+            });
+        }, startDelay);
     });
 }
 
