@@ -85,11 +85,11 @@ function initOverlay() {
     // Le navigateur va charger les sons en mémoire dès le lancement de l'overlay, 
     // ça évite qu'ils soient bloqués quand on essaie de les lire plus tard dans un "setTimeout"
     const audioCache = {
-        bubble: new Audio('../soundfx/bubbles.mp3'),
-        unlock: new Audio('../soundfx/unlock.mp3'),
-        coin: new Audio('../soundfx/coin.mp3'),
-        chestBubbles: new Audio('../soundfx/bubbles_treasure.wav'),
-        flyingCoins: new Audio('../soundfx/award_tips.wav')
+        bubble: new Audio('https://raw.githubusercontent.com/guccizy/Overlay_CozyGamingFish/master/soundfx/bubbles.mp3'),
+        unlock: new Audio('https://raw.githubusercontent.com/guccizy/Overlay_CozyGamingFish/master/soundfx/unlock.mp3'),
+        coin: new Audio('https://raw.githubusercontent.com/guccizy/Overlay_CozyGamingFish/master/soundfx/coin.mp3'),
+        chestBubbles: new Audio('https://raw.githubusercontent.com/guccizy/Overlay_CozyGamingFish/master/soundfx/bubbles_treasure.wav'),
+        flyingCoins: new Audio('https://raw.githubusercontent.com/guccizy/Overlay_CozyGamingFish/master/soundfx/award_tips.wav')
     };
 
     // On force le chargement des fichiers
