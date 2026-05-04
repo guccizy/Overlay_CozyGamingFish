@@ -69,27 +69,8 @@
                 </defs>
             </svg>
 
-            <!-- Coin haut droit -->
-            <svg class="corner corner-tr" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M110 110 Q110 10 10 10" stroke="url(#cyanGrad2)" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path d="M102 110 Q102 18 10 18" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
-                <!-- Petit poisson -->
-                <ellipse cx="55" cy="40" rx="12" ry="6" fill="#FF7B00" opacity="0.85"/>
-                <path d="M43 40 L36 34 L36 46 Z" fill="#FF7B00" opacity="0.85"/>
-                <circle cx="62" cy="38" r="2" fill="#1a0a00"/>
-                <circle cx="63" cy="37.5" r="0.7" fill="white"/>
-                <!-- Bulle -->
-                <circle cx="75" cy="30" r="4" fill="none" stroke="rgba(0,212,255,0.45)" stroke-width="1.2"/>
-                <circle cx="73.5" cy="28.5" r="1" fill="rgba(255,255,255,0.6)"/>
-                <circle cx="85" cy="50" r="6" fill="none" stroke="rgba(0,212,255,0.35)" stroke-width="1.5"/>
-                <circle cx="83" cy="48" r="1.5" fill="rgba(255,255,255,0.5)"/>
-                <defs>
-                    <linearGradient id="cyanGrad2" x1="1" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#00D4FF"/>
-                        <stop offset="100%" stop-color="#0088CC"/>
-                    </linearGradient>
-                </defs>
-            </svg>
+            <!-- Coin haut droit — Lottie poisson animé -->
+            <div id="lottie-corner-tr" class="corner corner-tr lottie-corner"></div>
 
             <!-- Coin bas gauche -->
             <svg class="corner corner-bl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,30 +96,8 @@
                 </defs>
             </svg>
 
-            <!-- Coin bas droit -->
-            <svg class="corner corner-br" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M110 10 Q110 110 10 110" stroke="url(#cyanGrad4)" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <path d="M102 10 Q102 102 10 102" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
-                <!-- Poisson clown -->
-                <ellipse cx="65" cy="90" rx="14" ry="8" fill="#FF6B00" opacity="0.9"/>
-                <path d="M51 90 L44 83 L44 97 Z" fill="#FF6B00" opacity="0.9"/>
-                <path d="M58 83 Q65 82 72 83" stroke="white" stroke-width="2.5" fill="none"/>
-                <path d="M58 97 Q65 98 72 97" stroke="white" stroke-width="2.5" fill="none"/>
-                <circle cx="73" cy="88" r="2.5" fill="#1a0a00"/>
-                <circle cx="74" cy="87.2" r="0.8" fill="white"/>
-                <!-- Bulles poisson -->
-                <circle cx="82" cy="74" r="3.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
-                <circle cx="88" cy="62" r="5" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1.4"/>
-                <circle cx="80.5" cy="72.5" r="0.9" fill="rgba(255,255,255,0.6)"/>
-                <!-- Algue -->
-                <path d="M30 110 Q33 95 27 80 Q31 65 25 50" stroke="#00C9A7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                <defs>
-                    <linearGradient id="cyanGrad4" x1="1" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#00D4FF"/>
-                        <stop offset="100%" stop-color="#FF7B00" stop-opacity="0.5"/>
-                    </linearGradient>
-                </defs>
-            </svg>
+            <!-- Coin bas droit — Lottie poisson animé (miroir) -->
+            <div id="lottie-corner-br" class="corner corner-br lottie-corner"></div>
 
             <!-- Bordures latérales top/bottom avec néons -->
             <div class="frame-edge frame-top"></div>
@@ -200,6 +159,7 @@
     <!-- Bulles dorées pour les subs -->
     <div id="gold-bubbles-container" style="position:fixed;inset:0;pointer-events:none;z-index:50;"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
     <script src="script.js"></script>
 </body>

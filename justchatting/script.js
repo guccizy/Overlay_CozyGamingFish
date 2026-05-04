@@ -382,11 +382,32 @@ window.addEventListener('onEventReceived', function (obj) {
 });
 
 // ============================================================
+//  LOTTIE COINS
+// ============================================================
+
+function initLottieCorners() {
+    const animData = {
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'lottie_ocean.json'
+    };
+
+    ['lottie-corner-tr', 'lottie-corner-br'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            bodymovin.loadAnimation({ ...animData, container: el });
+        }
+    });
+}
+
+// ============================================================
 //  INIT
 // ============================================================
 
 function init() {
     initAquarium();
+    initLottieCorners();
 }
 
 document.addEventListener('DOMContentLoaded', init);
