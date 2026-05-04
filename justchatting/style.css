@@ -1,6 +1,6 @@
 /* ============================================================
    CozyGamingFish - Just Chatting Scene
-   Resolution : 2560x1440
+   Resolution : 1920x1080
    Layout : Chat gauche | Cam + Socials droite
 ============================================================ */
 
@@ -11,8 +11,8 @@
     --color-hoodie-grey: #6C7A86;
     --color-hoodie-light: #A5B1BA;
     --color-bg: #061E30;
-    --chat-width: 680px;
-    --right-width: calc(2560px - 680px);
+    --chat-width: 520px;
+    --right-width: calc(1920px - 520px);
 }
 
 * {
@@ -24,8 +24,8 @@
 body {
     background: transparent;
     font-family: 'Nunito', sans-serif;
-    width: 2560px;
-    height: 1440px;
+    width: 1920px;
+    height: 1080px;
     overflow: hidden;
     display: flex;
     flex-direction: row;
@@ -263,8 +263,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 40px;
-    padding: 40px;
+    gap: 28px;
+    padding: 28px;
     position: relative;
     z-index: 10;
 }
@@ -276,9 +276,9 @@ body {
 
 .webcam-container {
     position: relative;
-    width: 718px;
-    height: 492px;
-    padding: 50px 50px 80px 50px;
+    width: 560px;
+    height: 384px;
+    padding: 40px 40px 65px 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -470,7 +470,7 @@ body {
 ============================================================ */
 
 .socials-panel {
-    width: 718px;
+    width: 560px;
     flex-shrink: 0;
 }
 
@@ -487,14 +487,14 @@ body {
 .socials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    gap: 10px;
 }
 
 .social-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
+    gap: 10px;
+    padding: 11px 14px;
     border-radius: 14px;
     background: linear-gradient(135deg, rgba(11,59,96,0.85) 0%, rgba(6,30,48,0.90) 100%);
     border: 1px solid rgba(32,135,181,0.2);
