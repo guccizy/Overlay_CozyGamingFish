@@ -40,14 +40,132 @@
 
     <!-- CHAT (gauche, écran maritime 3D) -->
     <div class="chat-panel-wrapper">
-        <div class="chat-panel">
-            <div class="chat-header">
-                <div class="chat-live-dot"></div>
-                <span class="chat-title">Live Chat</span>
+
+        <!-- Cadre décoratif SVG aquatique -->
+        <div class="screen-frame">
+
+            <!-- Coin haut gauche -->
+            <svg class="corner corner-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 110 Q10 10 110 10" stroke="url(#cyanGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M18 110 Q18 18 110 18" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
+                <!-- Corail coin -->
+                <ellipse cx="22" cy="95" rx="5" ry="12" fill="#FF6B9D" opacity="0.85"/>
+                <ellipse cx="16" cy="88" rx="4" ry="9" fill="#FF4D8D" opacity="0.75"/>
+                <ellipse cx="30" cy="98" rx="4" ry="8" fill="#FF8CB4" opacity="0.8"/>
+                <!-- Algue -->
+                <path d="M35 110 Q38 95 32 80 Q36 68 30 55" stroke="#00C9A7" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M42 110 Q46 97 40 84 Q44 70 38 58" stroke="#00A896" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- Petite étoile de mer -->
+                <path d="M55 105 L57 99 L60 105 L54 101 L62 101 Z" fill="#FFD700" opacity="0.9"/>
+                <!-- Bulle déco -->
+                <circle cx="70" cy="85" r="5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+                <circle cx="68.5" cy="83.5" r="1.2" fill="rgba(255,255,255,0.6)"/>
+                <circle cx="58" cy="72" r="3.5" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1.2"/>
+                <defs>
+                    <linearGradient id="cyanGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#00D4FF"/>
+                        <stop offset="100%" stop-color="#0088CC"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Coin haut droit -->
+            <svg class="corner corner-tr" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M110 110 Q110 10 10 10" stroke="url(#cyanGrad2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M102 110 Q102 18 10 18" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
+                <!-- Petit poisson -->
+                <ellipse cx="55" cy="40" rx="12" ry="6" fill="#FF7B00" opacity="0.85"/>
+                <path d="M43 40 L36 34 L36 46 Z" fill="#FF7B00" opacity="0.85"/>
+                <circle cx="62" cy="38" r="2" fill="#1a0a00"/>
+                <circle cx="63" cy="37.5" r="0.7" fill="white"/>
+                <!-- Bulle -->
+                <circle cx="75" cy="30" r="4" fill="none" stroke="rgba(0,212,255,0.45)" stroke-width="1.2"/>
+                <circle cx="73.5" cy="28.5" r="1" fill="rgba(255,255,255,0.6)"/>
+                <circle cx="85" cy="50" r="6" fill="none" stroke="rgba(0,212,255,0.35)" stroke-width="1.5"/>
+                <circle cx="83" cy="48" r="1.5" fill="rgba(255,255,255,0.5)"/>
+                <defs>
+                    <linearGradient id="cyanGrad2" x1="1" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#00D4FF"/>
+                        <stop offset="100%" stop-color="#0088CC"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Coin bas gauche -->
+            <svg class="corner corner-bl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 10 Q10 110 110 110" stroke="url(#cyanGrad3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M18 10 Q18 102 110 102" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
+                <!-- Gros corail bas -->
+                <ellipse cx="50" cy="95" rx="7" ry="18" fill="#FF4D8D" opacity="0.9"/>
+                <ellipse cx="40" cy="100" rx="5" ry="13" fill="#FF6B9D" opacity="0.8"/>
+                <ellipse cx="62" cy="98" rx="5" ry="14" fill="#C4338C" opacity="0.8"/>
+                <ellipse cx="72" cy="105" rx="4" ry="9" fill="#FF8CB4" opacity="0.75"/>
+                <!-- Anémone -->
+                <circle cx="35" cy="82" r="6" fill="#FF7B00" opacity="0.7"/>
+                <circle cx="28" cy="78" r="4" fill="#FF9D3A" opacity="0.7"/>
+                <circle cx="42" cy="80" r="4" fill="#FFC060" opacity="0.65"/>
+                <!-- Coquillage -->
+                <path d="M80 108 Q88 100 95 108 Q88 116 80 108" fill="#C8A882" opacity="0.8"/>
+                <path d="M84 108 Q88 103 92 108" stroke="#A0896A" stroke-width="1" fill="none"/>
+                <defs>
+                    <linearGradient id="cyanGrad3" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#00D4FF"/>
+                        <stop offset="100%" stop-color="#FF7B00" stop-opacity="0.6"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Coin bas droit -->
+            <svg class="corner corner-br" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M110 10 Q110 110 10 110" stroke="url(#cyanGrad4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M102 10 Q102 102 10 102" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="none"/>
+                <!-- Poisson clown -->
+                <ellipse cx="65" cy="90" rx="14" ry="8" fill="#FF6B00" opacity="0.9"/>
+                <path d="M51 90 L44 83 L44 97 Z" fill="#FF6B00" opacity="0.9"/>
+                <path d="M58 83 Q65 82 72 83" stroke="white" stroke-width="2.5" fill="none"/>
+                <path d="M58 97 Q65 98 72 97" stroke="white" stroke-width="2.5" fill="none"/>
+                <circle cx="73" cy="88" r="2.5" fill="#1a0a00"/>
+                <circle cx="74" cy="87.2" r="0.8" fill="white"/>
+                <!-- Bulles poisson -->
+                <circle cx="82" cy="74" r="3.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+                <circle cx="88" cy="62" r="5" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1.4"/>
+                <circle cx="80.5" cy="72.5" r="0.9" fill="rgba(255,255,255,0.6)"/>
+                <!-- Algue -->
+                <path d="M30 110 Q33 95 27 80 Q31 65 25 50" stroke="#00C9A7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <defs>
+                    <linearGradient id="cyanGrad4" x1="1" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#00D4FF"/>
+                        <stop offset="100%" stop-color="#FF7B00" stop-opacity="0.5"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Bordures latérales top/bottom avec néons -->
+            <div class="frame-edge frame-top"></div>
+            <div class="frame-edge frame-bottom"></div>
+            <div class="frame-edge frame-left"></div>
+            <div class="frame-edge frame-right"></div>
+
+            <!-- Bulles animées dans le cadre -->
+            <div class="frame-bubbles">
+                <div class="fb fb1"></div>
+                <div class="fb fb2"></div>
+                <div class="fb fb3"></div>
+                <div class="fb fb4"></div>
+                <div class="fb fb5"></div>
             </div>
-            <div class="chat-messages" id="chat-messages"></div>
-        </div>
-    </div>
+
+            <!-- Contenu chat -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <div class="chat-live-dot"></div>
+                    <span class="chat-title">Live Chat</span>
+                </div>
+                <div class="chat-messages" id="chat-messages"></div>
+            </div>
+
+        </div><!-- /.screen-frame -->
+    </div><!-- /.chat-panel-wrapper -->
 
     <!-- ZONE ALERTES (sous le chat) -->
     <div class="alert-zone" id="alert-zone" style="display:none;">
