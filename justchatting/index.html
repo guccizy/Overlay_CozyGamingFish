@@ -50,7 +50,23 @@
     <!-- ===================== ZONE CENTRALE ===================== -->
     <div class="main-area">
 
-        <!-- CHAT À GAUCHE -->
+        <!-- CAM AU CENTRE (grande, sans fond) -->
+        <div class="cam-center">
+            <div class="webcam-container">
+                <div class="webcam-frame">
+                    <div class="glass-reflection"></div>
+                    <div class="bubbles-container" id="bubbles-container"></div>
+                    <div id="gold-bubbles-container" class="gold-bubbles-zone"></div>
+                    <div id="lottie-corals" class="corals-container" style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:380px;height:220px;z-index:9;pointer-events:none;display:none;"></div>
+                    <div id="lottie-chest" class="chest-container" style="position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);width:280px;height:280px;pointer-events:none;display:none;"></div>
+                    <div class="nameplate">
+                        <span class="nameplate-text">CozyGamingFish</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAT À GAUCHE (flottant par-dessus) -->
         <div class="chat-panel">
             <div class="chat-panel-header">
                 <span class="chat-icon">💬</span>
@@ -58,25 +74,6 @@
                 <div class="chat-header-glow"></div>
             </div>
             <div class="chat-messages" id="chat-messages"></div>
-        </div>
-
-        <!-- ZONE CENTRALE LIBRE (vide, juste la cam en bas à droite) -->
-        <div class="center-area"></div>
-
-        <!-- CAM À DROITE -->
-        <div class="cam-panel">
-            <div class="webcam-container">
-                <div class="webcam-frame">
-                    <div class="glass-reflection"></div>
-                    <div class="bubbles-container" id="bubbles-container"></div>
-                    <div id="gold-bubbles-container" class="gold-bubbles-zone"></div>
-                    <div id="lottie-corals" class="corals-container" style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:280px;height:160px;z-index:9;pointer-events:none;display:none;"></div>
-                    <div id="lottie-chest" class="chest-container" style="position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);width:220px;height:220px;pointer-events:none;display:none;"></div>
-                    <div class="nameplate">
-                        <span class="nameplate-text">CozyGamingFish</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
