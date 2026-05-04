@@ -1,0 +1,506 @@
+/* Variables de couleurs basées sur la DA */
+:root {
+    --color-ocean-deep: #0B3B60;
+    --color-ocean-light: #2087B5;
+    --color-fish-orange: #FF7B00;
+    --color-hoodie-grey: #6C7A86;
+    --color-hoodie-light: #A5B1BA;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: transparent;
+    font-family: 'Lobster', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Conteneur global */
+.webcam-container {
+    position: relative;
+    /* Dimensions fixes pour figer le ratio (basées sur ta capture d'écran) */
+    width: 718px; 
+    height: 492px; 
+    padding: 50px 50px 80px 50px; /* Padding augmenté pour ne pas couper le glow (ombre) et laisser place au pseudo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Le cadre réel de la webcam - Mode Hublot d'Aquarium High-Tech */
+.webcam-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    /* Un magnifique halo lumineux cyan tout autour pour l'ambiance "Cozy Gaming" */
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        0 0 35px rgba(32, 135, 181, 0.5);
+}
+
+/* 1. Cadre Externe (Bleu profond et épais avec animation de respiration) */
+.webcam-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 12px; /* Cadre épais */
+    
+    background: linear-gradient(135deg, var(--color-ocean-deep) 0%, #17486B 50%, #0A243B 100%);
+    background-size: 200% 200%;
+    animation: oceanBreathe 6s ease-in-out infinite alternate;
+
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 2. Néon Interne (Cyan avec faisceau Orange qui tourne) */
+.webcam-frame::after {
+    content: '';
+    position: absolute;
+    inset: 8px; /* On le décale vers l'intérieur pour qu'il s'encastre dans le bord épais */
+    border-radius: 16px;
+    padding: 3px; /* Ligne fine et élégante */
+    
+    /* Dégradé avec une touche de l'orange du personnage au milieu */
+    background: linear-gradient(
+        70deg, 
+        var(--color-ocean-light) 0%, 
+        var(--color-ocean-light) 40%, 
+        var(--color-fish-orange) 50%, 
+        var(--color-ocean-light) 60%, 
+        var(--color-ocean-light) 100%
+    );
+    background-size: 300% 300%;
+    animation: neonSweep 4s linear infinite;
+    
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 3. Reflet de verre dynamique sur la bordure externe */
+.glass-reflection {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 12px; /* S'applique sur l'épaisseur du cadre externe */
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.05) 55%, transparent 70%);
+    background-size: 200% 200%;
+    animation: glassShine 7s infinite;
+    
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Conteneur des bulles */
+.bubbles-container {
+    position: absolute;
+    /* On réduit légèrement le débordement pour être sûr que ça reste dans les 50px de padding global */
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Style individuel des bulles */
+.bubble {
+    position: absolute;
+    bottom: -10px; /* On la fait démarrer un peu plus haut pour qu'elle ne soit pas coupée au lancement */
+    border-radius: 50%;
+    background: radial-gradient(150% 150% at 30% 20%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+    box-shadow: 
+        inset 0 0 10px rgba(255, 255, 255, 0.3),
+        inset -3px -3px 10px rgba(11, 59, 96, 0.2), 
+        0 0 5px rgba(255, 255, 255, 0.1);
+    border: 0.5px solid rgba(255, 255, 255, 0.4);
+    opacity: 0;
+}
+
+/* Le petit reflet de lumière sur la bulle */
+.bubble::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+    transform: rotate(-45deg);
+}
+
+/* L'étiquette du pseudo - Mode Dynamique & Artistique */
+.nameplate {
+    position: absolute;
+    bottom: -40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Centrage parfait du texte à l'intérieur */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Dégradé riche */
+    background: linear-gradient(135deg, #0A243B 0%, var(--color-ocean-deep) 100%);
+    
+    padding: 10px 45px;
+    border-radius: 12px 12px 35px 35px; /* Forme originale type écusson/enseigne */
+    
+    /* Bordures colorées pour le dynamisme */
+    border-top: 3px solid var(--color-fish-orange);
+    border-bottom: 2px solid var(--color-ocean-light);
+    
+    /* Ombres : profondeur + glow orange léger qui rappelle le poisson */
+    box-shadow: 
+        0 15px 25px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 123, 0, 0.3),
+        inset 0 -5px 15px rgba(32, 135, 181, 0.5);
+        
+    z-index: 11;
+    white-space: nowrap; 
+    overflow: hidden; 
+    
+    /* Lévitation douce du conteneur */
+    animation: floatName 4s ease-in-out infinite;
+}
+
+/* Reflet de lumière qui balaie l'étiquette du pseudo (adapté à l'orange) */
+.nameplate::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 123, 0, 0.5), transparent);
+    transform: skewX(-25deg);
+    animation: nameplateShine 5s infinite 2s;
+    pointer-events: none;
+}
+
+.nameplate-text {
+    position: relative;
+    z-index: 2; 
+    color: #FFFFFF;
+    font-size: clamp(24px, 5vw, 34px); /* Un peu plus grand pour Lobster */
+    font-weight: normal; /* Lobster est déjà épaisse */
+    letter-spacing: 2px;
+    padding-left: 2px; /* Compense le letter-spacing pour un centrage parfait */
+    /* Ombre portée pour le contraste + petit effet néon orange */
+    text-shadow: 
+        2px 2px 0px var(--color-ocean-deep),
+        -1px -1px 10px var(--color-fish-orange);
+}
+
+/* --- ANIMATIONS --- */
+
+/* Respiration de l'eau sur la bordure épaisse */
+@keyframes oceanBreathe {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* Ligne orange qui court le long du néon cyan */
+@keyframes neonSweep {
+    0% { background-position: 150% 0%; }
+    100% { background-position: -50% 100%; }
+}
+
+/* Éclat de lumière sur le verre du cadre */
+@keyframes glassShine {
+    0%, 20% { background-position: -50% -50%; }
+    80%, 100% { background-position: 150% 150%; }
+}
+
+/* =========================================
+   ANIMATION COFFRE AU TRÉSOR (SUB) 100% CSS
+========================================= */
+
+.treasure-chest {
+    position: absolute;
+    bottom: 25px; /* Position par rapport au bas du cadre principal */
+    left: 50%;
+    transform: translateX(-50%) scale(0); /* État par défaut caché */
+    opacity: 0;
+    width: 80px;
+    height: 65px;
+    z-index: 15; /* Au-dessus de la nameplate */
+    pointer-events: none;
+    perspective: 600px; /* Pour un effet 3D plus réaliste lors de l'ouverture */
+}
+
+/* Base du coffre (Bois texturé et bordures or) */
+.chest-base {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    /* Texture de lattes de bois */
+    background: repeating-linear-gradient(
+        to bottom,
+        #4A2B11,
+        #4A2B11 8px,
+        #361E0A 8px,
+        #361E0A 10px
+    );
+    border: 3px solid #D4AF37; /* Or */
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 
+        inset 0 -5px 15px rgba(0,0,0,0.7),
+        0 8px 15px rgba(0,0,0,0.6);
+    z-index: 4; /* Repassé au-dessus de la lumière */
+    overflow: hidden;
+}
+
+/* Lanières métalliques sur la base */
+.chest-base::before, .chest-base::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 12px;
+    height: 100%;
+    background: linear-gradient(to right, #B8860B, #FFD700 50%, #B8860B);
+    border-left: 2px solid #5c4000;
+    border-right: 2px solid #5c4000;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+.chest-base::before { left: 12px; }
+.chest-base::after { right: 12px; }
+
+/* Couvercle du coffre (Arrondi sur le dessus avec texture) */
+.chest-lid {
+    position: absolute;
+    top: -5px; /* Déplacé légèrement vers le haut pour être raccord avec la base */
+    width: 100%;
+    height: 40px; /* Un peu plus grand pour l'arrondi */
+    /* Texture de bois */
+    background: repeating-linear-gradient(
+        to bottom,
+        #5E3615,
+        #5E3615 8px,
+        #42250C 8px,
+        #42250C 10px
+    );
+    border: 3px solid #D4AF37;
+    border-bottom: 2px solid #8B6508; /* Bordure plus sombre au contact de la base */
+    border-radius: 40px 40px 0 0;
+    transform-origin: bottom center; /* Point de pivot pour l'ouverture */
+    z-index: 5; /* Au-dessus de la base */
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: inset 0 8px 10px rgba(255,255,255,0.15);
+    overflow: hidden;
+}
+
+/* L'intérieur du coffre (mur du fond qui se révèle quand ça s'ouvre) */
+.chest-inside {
+    position: absolute;
+    bottom: 30px; /* Juste derrière la bordure haute de la base */
+    left: 3px; /* Aligné avec les bordures */
+    width: calc(100% - 6px);
+    height: 0px; /* Caché quand fermé */
+    background: #1A0D04; /* Bois très sombre/intérieur d'un coffre */
+    z-index: 1;
+    transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 5px 5px 0 0;
+}
+
+/* Lanières métalliques sur le couvercle */
+.chest-lid::before, .chest-lid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 12px;
+    height: 100%;
+    background: linear-gradient(to right, #B8860B, #FFD700 50%, #B8860B);
+    border-left: 2px solid #5c4000;
+    border-right: 2px solid #5c4000;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+.chest-lid::before { left: 12px; }
+.chest-lid::after { right: 12px; }
+
+/* Serrure du coffre plus réaliste */
+.chest-lock {
+    position: absolute;
+    top: 25px; /* Ajusté avec la nouvelle taille du couvercle */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 22px;
+    background: linear-gradient(to bottom, #FFDF00, #B8860B);
+    border: 2px solid #5c4000;
+    border-radius: 4px 4px 8px 8px;
+    box-shadow: 
+        0 4px 6px rgba(0,0,0,0.8), 
+        inset 0 2px 2px rgba(255,255,255,0.6);
+    z-index: 6; /* Au-dessus de tout */
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Trou de la serrure */
+.chest-lock::after {
+    content: '';
+    width: 4px;
+    height: 8px;
+    background: #2A1505;
+    border-radius: 4px 4px 2px 2px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Lueur magique à l'intérieur du coffre */
+.chest-glow {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 10px;
+    background: transparent;
+    border-radius: 50%;
+    box-shadow: 0 0 0px 0px rgba(255, 215, 0, 0);
+    z-index: 1;
+    transition: box-shadow 0.6s ease;
+}
+
+/* --- CLASSES D'ANIMATION DU COFFRE --- */
+
+/* 1. Apparition du coffre (il pop et rebondit bien) */
+.treasure-chest.appear {
+    animation: chestPopIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transform: translateX(-50%) translateY(0) scale(1); /* Maintient l'état final */
+    opacity: 1;
+}
+
+@keyframes chestPopIn {
+    0% { transform: translateX(-50%) translateY(50px) scale(0); opacity: 0; }
+    60% { transform: translateX(-50%) translateY(-10px) scale(1.1); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+}
+
+/* Effet de tremblement avant ouverture */
+.treasure-chest.shake {
+    animation: chestShake 0.4s ease-in-out infinite;
+}
+
+@keyframes chestShake {
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-52%) rotate(-4deg); }
+    50% { transform: translateX(-48%) rotate(4deg); }
+    75% { transform: translateX(-52%) rotate(-4deg); }
+}
+
+/* 2. Ouverture du coffre (élévation du couvercle + révélation de l'intérieur) */
+.treasure-chest.open .chest-lid {
+    /* Le couvercle se soulève tout droit, révélant le fond du coffre */
+    transform: translateY(-25px); 
+    border-bottom: 2px solid #FFFDE7; /* S'éclaire au contact de la lumière magique */
+}
+.treasure-chest.open .chest-inside {
+    height: 25px; /* L'intérieur du coffre devient visible */
+}
+.treasure-chest.open .chest-lock {
+    /* Suit le mouvement du couvercle vers le haut */
+    transform: translateX(-50%) translateY(-25px); 
+    opacity: 0; /* Disparaît doucement pour laisser place à la lumière */
+}
+.treasure-chest.open .chest-glow {
+    box-shadow: 
+        0 -15px 50px 30px rgba(255, 215, 0, 1), 
+        0 -30px 100px 50px rgba(255, 123, 0, 0.7),
+        0 0 25px 15px #FFFDE7;
+    background: #FFFDE7;
+    /* On positionne la lumière au centre de l'ouverture (entre la base et le couvercle soulevé) */
+    top: 15px; 
+}
+
+/* 3. Disparition (il recoule en s'enfonçant) */
+.treasure-chest.disappear {
+    animation: chestSink 0.6s ease-in forwards;
+}
+
+@keyframes chestSink {
+    0% { transform: translateX(-50%) scale(1); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(50px) scale(0.5); opacity: 0; }
+}
+
+/* --- Bulles dorées (spécifiques aux Tips) --- */
+.bubble.gold {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 215, 0, 0.6) 40%, rgba(218, 165, 32, 0.2) 80%, transparent 100%);
+    box-shadow: 
+        inset -2px -2px 5px rgba(218, 165, 32, 0.6),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.9),
+        0 0 15px rgba(255, 215, 0, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+/* --- Bulles orange-jaune (spécifiques aux Subs) --- */
+.bubble.sub {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 140, 0, 0.6) 40%, rgba(255, 90, 0, 0.2) 80%, transparent 100%);
+    box-shadow: 
+        inset -2px -2px 5px rgba(255, 90, 0, 0.6),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.9),
+        0 0 15px rgba(255, 140, 0, 0.8);
+    border: 1px solid rgba(255, 140, 0, 0.4);
+}
+
+/* Éclat de lumière sur le pseudo */
+@keyframes nameplateShine {
+    0%, 40% { left: -100%; }
+    100% { left: 200%; }
+}
+
+/* Animation des bulles */
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    10% { opacity: 0.8; }
+    80% { opacity: 0.5; }
+    100% { transform: translateY(-500px) scale(1.2); opacity: 0; }
+}
+
+/* Animation pour faire monter la boite de l'animation des pièces (Tips) */
+#lottie-flying-coins, #lottie-flying-coins svg {
+    overflow: visible !important;
+}
+
+@keyframes flyingCoinsMoveUp {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-350px); }
+}
+
+@keyframes wobble {
+    0%, 100% { margin-left: 0; }
+    33% { margin-left: 15px; }
+    66% { margin-left: -15px; }
+}
+
+/* Animation de lévitation du pseudo */
+@keyframes floatName {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+}

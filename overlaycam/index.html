@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CozyGamingFish Webcam Overlay</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+    /* Animation pour faire glisser les coraux depuis le bas */
+    @keyframes slideCoralsUp {
+        0% { transform: translate(-50%, 60px); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translate(-50%, 0); opacity: 1; }
+    }
+    
+    /* Animation pour faire disparaître les coraux vers le bas */
+    @keyframes slideCoralsDown {
+        0% { transform: translate(-50%, 0); opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translate(-50%, 60px); opacity: 0; }
+    }
+
+    /* Animation SPÉCIALE pour le coffre avec gestion de la profondeur (z-index) */
+    @keyframes slideChestUp {
+        0% { transform: translate(-50%, 60px); opacity: 0; z-index: 10; }
+        20% { opacity: 1; z-index: 10; }
+        98% { transform: translate(-50%, 0); opacity: 1; z-index: 10; }
+        99% { z-index: 15; }
+        100% { transform: translate(-50%, 0); opacity: 1; z-index: 15; }
+    }
+    
+    @keyframes slideChestDown {
+        0% { transform: translate(-50%, 0); opacity: 1; z-index: 15; }
+        10% { transform: translate(-50%, 2px); z-index: 15; }
+        11% { z-index: 10; opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translate(-50%, 60px); opacity: 0; z-index: 10; }
+    }
+
+    .corals-container.show {
+        animation: slideCoralsUp 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    
+    .corals-container.hide {
+        animation: slideCoralsDown 0.6s ease-in forwards;
+    }
+
+    /* Classes pour animer le coffre en slide avec z-index dynamique */
+    .chest-container.show {
+        animation: slideChestUp 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    
+    .chest-container.hide {
+        animation: slideChestDown 0.6s ease-in forwards;
+    }
+    </style>
+</head>
+<body>
+    
+    <div class="webcam-container">
+        <!-- Nouveau sous-conteneur qui gère le cadre -->
+        <div class="webcam-frame">
+            <!-- Reflet lumineux sur la bordure -->
+            <div class="glass-reflection"></div>
+            
+        <!-- Conteneur pour l'animation des bulles (les normales, fond) -->
+        <div class="bubbles-container" id="bubbles-container"></div>
+
+        <!-- NOUVEAU : Conteneur pour les bulles dorées (ENTRE le pseudo et les coraux) -->
+        <div id="gold-bubbles-container" style="position: absolute; top: -15px; left: -15px; right: -15px; bottom: -15px; pointer-events: none; z-index: 10;"></div>
+
+        <!-- Conteneur pour l'animation des pièces qui volent au centre (Tips) DERRIÈRE LE COFFRE (z-index 9) -->
+        <div id="lottie-flying-coins" style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); width: 160px; height: 160px; pointer-events: none; z-index: 9; display: none;"></div>
+
+        <!-- Conteneur pour l'animation Lottie des coraux (Tips) DERRIÈRE le coffre -->
+        <div id="lottie-corals-tip" class="corals-container" style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 240px; height: 140px; z-index: 8; pointer-events: none; display: none;"></div>
+
+        <!-- Conteneur pour l'animation Lottie du coffre (Tips) DEVANT les coraux -->
+        <div id="lottie-chest-tip" class="chest-container" style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 260px; height: 260px; pointer-events: none; display: none;"></div>
+
+        <!-- Conteneur pour l'animation Lottie des coraux (Subs) DERRIÈRE le coffre -->
+        <div id="lottie-corals" class="corals-container" style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 340px; height: 200px; z-index: 9; pointer-events: none; display: none;"></div>
+
+        <!-- Conteneur pour l'animation Lottie du coffre (Subs) DEVANT les coraux -->
+        <div id="lottie-chest" class="chest-container" style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 260px; height: 260px; pointer-events: none; display: none;"></div>
+
+        <!-- Étiquette avec le pseudo (z-index 11) -->
+        <div class="nameplate">
+            <span class="nameplate-text">CozyGamingFish</span>
+        </div>
+        </div>
+    </div>
+
+    <!-- Script de Lottie (Bodymovin) pour lire le JSON -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
