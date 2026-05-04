@@ -1,292 +1,249 @@
 /* ============================================================
-   CozyGamingFish - Just Chatting Scene
+   CozyGamingFish — Just Chatting Immersif
 ============================================================ */
 
 const TWITCH_CHANNEL = 'CozyGamingFish';
-const MAX_MESSAGES   = 10;
+const MAX_MESSAGES   = 12;
 
 const USER_COLORS = [
-    '#2087B5', '#FF7B00', '#00C9A7', '#FF6B9D',
-    '#A855F7', '#F59E0B', '#10B981', '#3B82F6',
+    '#2087B5','#FF7B00','#00C9A7','#FF6B9D',
+    '#A855F7','#F59E0B','#10B981','#3B82F6',
 ];
 
 // ============================================================
-//  CANVAS FOND ANIMÉ — Aquarium profond
+//  CANVAS AQUARIUM IMMERSIF
 // ============================================================
 
-function initBgCanvas() {
+function initAquarium() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     canvas.width  = 1920;
     canvas.height = 1080;
 
-    // --- Particules (bulles d'eau) ---
-    const particles = [];
-    for (let i = 0; i < 80; i++) {
-        particles.push({
-            x:    Math.random() * 1920,
-            y:    Math.random() * 1080 + 1080, // start below screen
-            r:    Math.random() * 8 + 2,
-            speed: Math.random() * 0.4 + 0.15,
-            wobble: Math.random() * Math.PI * 2,
-            wobbleSpeed: Math.random() * 0.015 + 0.005,
-            wobbleAmp: Math.random() * 18 + 5,
-            opacity: Math.random() * 0.25 + 0.05,
-        });
-    }
+    // --- Bulles ---
+    const bubbles = Array.from({ length: 120 }, () => ({
+        x:      Math.random() * 1920,
+        y:      Math.random() * 1080 + 1080,
+        r:      Math.random() * 9 + 1.5,
+        speed:  Math.random() * 0.5 + 0.12,
+        wob:    Math.random() * Math.PI * 2,
+        wobSpd: Math.random() * 0.018 + 0.005,
+        wobAmp: Math.random() * 22 + 4,
+        alpha:  Math.random() * 0.22 + 0.04,
+    }));
 
     // --- Rayons lumineux ---
-    const rays = [];
-    for (let i = 0; i < 7; i++) {
-        rays.push({
-            x:     200 + Math.random() * 1520,
-            angle: -Math.PI / 2 + (Math.random() - 0.5) * 0.6,
-            width: Math.random() * 120 + 40,
-            opacity: Math.random() * 0.04 + 0.01,
-            speed:  Math.random() * 0.0003 + 0.0001,
-            phase:  Math.random() * Math.PI * 2,
-        });
-    }
+    const rays = Array.from({ length: 9 }, () => ({
+        x:     Math.random() * 1920,
+        angle: -Math.PI / 2 + (Math.random() - 0.5) * 0.7,
+        w:     Math.random() * 140 + 30,
+        alpha: Math.random() * 0.045 + 0.01,
+        phase: Math.random() * Math.PI * 2,
+        spd:   Math.random() * 0.0004 + 0.0001,
+    }));
+
+    // --- Particules flottantes ---
+    const particles = Array.from({ length: 60 }, () => ({
+        x:     Math.random() * 1920,
+        y:     Math.random() * 1080,
+        r:     Math.random() * 2 + 0.5,
+        vx:    (Math.random() - 0.5) * 0.15,
+        vy:    -(Math.random() * 0.2 + 0.05),
+        alpha: Math.random() * 0.3 + 0.05,
+    }));
 
     // --- Poissons ambiants ---
-    const fishes = [];
-    const fishEmojis = ['🐟', '🐠', '🐡', '🐬'];
-    for (let i = 0; i < 4; i++) {
-        fishes.push({
-            x:      Math.random() * 1920,
-            y:      100 + Math.random() * 880,
-            speed:  (Math.random() * 0.4 + 0.2) * (Math.random() > 0.5 ? 1 : -1),
-            emoji:  fishEmojis[Math.floor(Math.random() * fishEmojis.length)],
-            size:   18 + Math.random() * 14,
-            bob:    Math.random() * Math.PI * 2,
-            bobSpeed: Math.random() * 0.02 + 0.01,
-            opacity: 0.12 + Math.random() * 0.1,
-        });
-    }
+    const fishEmoji = ['🐟','🐠','🐡','🐬','🐙'];
+    const fishes = Array.from({ length: 6 }, () => {
+        const dir = Math.random() > 0.5 ? 1 : -1;
+        return {
+            x:     Math.random() * 1920,
+            y:     80 + Math.random() * 900,
+            spd:   (Math.random() * 0.35 + 0.1) * dir,
+            emoji: fishEmoji[Math.floor(Math.random() * fishEmoji.length)],
+            size:  16 + Math.random() * 18,
+            bob:   Math.random() * Math.PI * 2,
+            bobSpd: Math.random() * 0.018 + 0.008,
+            alpha: 0.08 + Math.random() * 0.1,
+        };
+    });
 
     let t = 0;
 
-    function draw() {
+    function frame() {
         t++;
         ctx.clearRect(0, 0, 1920, 1080);
 
-        // --- Fond dégradé ocean ---
-        const grad = ctx.createLinearGradient(0, 0, 0, 1080);
-        grad.addColorStop(0,   '#04111E');
-        grad.addColorStop(0.4, '#061828');
-        grad.addColorStop(0.8, '#072035');
-        grad.addColorStop(1,   '#04111E');
-        ctx.fillStyle = grad;
+        // Fond dégradé profond
+        const bg = ctx.createLinearGradient(0, 0, 0, 1080);
+        bg.addColorStop(0,    '#03101c');
+        bg.addColorStop(0.35, '#051929');
+        bg.addColorStop(0.7,  '#072035');
+        bg.addColorStop(1,    '#040f1a');
+        ctx.fillStyle = bg;
         ctx.fillRect(0, 0, 1920, 1080);
 
-        // --- Couches de profondeur (vagues horizontales) ---
-        for (let layer = 0; layer < 3; layer++) {
-            const layerOpacity = 0.025 - layer * 0.006;
-            const layerY = 300 + layer * 220;
-            const amplitude = 30 - layer * 8;
-            const freq = 0.003 + layer * 0.001;
+        // Lueur de surface (haut)
+        const surf = ctx.createLinearGradient(0, 0, 0, 260);
+        surf.addColorStop(0, 'rgba(0,180,255,0.08)');
+        surf.addColorStop(1, 'rgba(0,180,255,0)');
+        ctx.fillStyle = surf;
+        ctx.fillRect(0, 0, 1920, 260);
+
+        // Lueur chaude au fond (reflet sable)
+        const sand = ctx.createLinearGradient(0, 820, 0, 1080);
+        sand.addColorStop(0, 'rgba(0,0,0,0)');
+        sand.addColorStop(1, 'rgba(255,100,0,0.04)');
+        ctx.fillStyle = sand;
+        ctx.fillRect(0, 820, 1920, 260);
+
+        // Vagues de profondeur subtiles
+        for (let l = 0; l < 4; l++) {
+            const baseY = 200 + l * 220;
+            const amp   = 22 - l * 4;
+            const speed = 0.006 - l * 0.001;
             ctx.beginPath();
-            ctx.moveTo(0, layerY);
-            for (let x = 0; x <= 1920; x += 4) {
-                const y = layerY + Math.sin(x * freq + t * 0.008 + layer * 1.2) * amplitude;
-                ctx.lineTo(x, y);
+            for (let x = 0; x <= 1920; x += 3) {
+                const y = baseY + Math.sin(x * 0.0025 + t * speed + l * 1.5) * amp;
+                x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
             }
             ctx.lineTo(1920, 1080);
             ctx.lineTo(0, 1080);
             ctx.closePath();
-            ctx.fillStyle = `rgba(32,135,181,${layerOpacity})`;
+            ctx.fillStyle = `rgba(10,100,160,${0.018 - l * 0.003})`;
             ctx.fill();
         }
 
-        // --- Rayons lumineux (caustiques) ---
-        rays.forEach(ray => {
-            ray.phase += ray.speed;
-            const alpha = ray.opacity * (0.6 + 0.4 * Math.sin(ray.phase));
-            const len = 900 + Math.sin(ray.phase * 1.3) * 100;
+        // Rayons lumineux (caustiques)
+        rays.forEach(r => {
+            r.phase += r.spd;
+            const a = r.alpha * (0.5 + 0.5 * Math.sin(r.phase));
+            const len = 850 + Math.sin(r.phase * 1.4) * 80;
 
             ctx.save();
-            ctx.translate(ray.x, -50);
-            ctx.rotate(ray.angle);
+            ctx.translate(r.x, -60);
+            ctx.rotate(r.angle);
 
-            const rayGrad = ctx.createLinearGradient(0, 0, 0, len);
-            rayGrad.addColorStop(0,   `rgba(100,200,255,${alpha})`);
-            rayGrad.addColorStop(0.5, `rgba(32,135,181,${alpha * 0.5})`);
-            rayGrad.addColorStop(1,   `rgba(32,135,181,0)`);
+            const rg = ctx.createLinearGradient(0, 0, 0, len);
+            rg.addColorStop(0,   `rgba(80,200,255,${a})`);
+            rg.addColorStop(0.4, `rgba(32,135,181,${a * 0.5})`);
+            rg.addColorStop(1,   `rgba(0,80,140,0)`);
 
-            ctx.fillStyle = rayGrad;
             ctx.beginPath();
-            ctx.moveTo(-ray.width / 2, 0);
-            ctx.lineTo(ray.width / 2, 0);
-            ctx.lineTo(ray.width * 0.8, len);
-            ctx.lineTo(-ray.width * 0.8, len);
+            ctx.moveTo(-r.w / 2, 0);
+            ctx.lineTo(r.w / 2, 0);
+            ctx.lineTo(r.w * 0.75, len);
+            ctx.lineTo(-r.w * 0.75, len);
             ctx.closePath();
+            ctx.fillStyle = rg;
             ctx.fill();
             ctx.restore();
         });
 
-        // --- Lueur orange subtile en bas (reflet aquarium) ---
-        const orangeGrad = ctx.createRadialGradient(960, 1100, 0, 960, 1100, 700);
-        orangeGrad.addColorStop(0,   'rgba(255,123,0,0.06)');
-        orangeGrad.addColorStop(0.5, 'rgba(255,123,0,0.02)');
-        orangeGrad.addColorStop(1,   'rgba(255,123,0,0)');
-        ctx.fillStyle = orangeGrad;
-        ctx.fillRect(0, 0, 1920, 1080);
-
-        // --- Lueur cyan en haut (surface de l'eau) ---
-        const cyanGrad = ctx.createRadialGradient(960, -50, 0, 960, -50, 600);
-        cyanGrad.addColorStop(0,   'rgba(32,135,181,0.08)');
-        cyanGrad.addColorStop(0.6, 'rgba(32,135,181,0.02)');
-        cyanGrad.addColorStop(1,   'rgba(32,135,181,0)');
-        ctx.fillStyle = cyanGrad;
-        ctx.fillRect(0, 0, 1920, 1080);
-
-        // --- Bulles ---
+        // Particules flottantes
         particles.forEach(p => {
-            p.y     -= p.speed;
-            p.wobble += p.wobbleSpeed;
-            const x = p.x + Math.sin(p.wobble) * p.wobbleAmp;
+            p.x += p.vx + Math.sin(t * 0.01 + p.y * 0.005) * 0.08;
+            p.y += p.vy;
+            if (p.y < -5)   p.y = 1085;
+            if (p.x < -5)   p.x = 1925;
+            if (p.x > 1925) p.x = -5;
 
-            if (p.y < -20) {
-                p.y = 1100 + Math.random() * 200;
-                p.x = Math.random() * 1920;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(100,200,255,${p.alpha})`;
+            ctx.fill();
+        });
+
+        // Bulles
+        bubbles.forEach(b => {
+            b.y   -= b.speed;
+            b.wob += b.wobSpd;
+            const bx = b.x + Math.sin(b.wob) * b.wobAmp;
+
+            if (b.y < -15) {
+                b.y = 1095 + Math.random() * 100;
+                b.x = Math.random() * 1920;
             }
 
             ctx.save();
-            ctx.globalAlpha = p.opacity;
+            ctx.globalAlpha = b.alpha;
 
-            // Bulle
-            const bubbleGrad = ctx.createRadialGradient(x - p.r * 0.3, p.y - p.r * 0.3, 0, x, p.y, p.r);
-            bubbleGrad.addColorStop(0,   'rgba(255,255,255,0.6)');
-            bubbleGrad.addColorStop(0.4, 'rgba(100,200,255,0.15)');
-            bubbleGrad.addColorStop(1,   'rgba(32,135,181,0.05)');
+            const bg2 = ctx.createRadialGradient(bx - b.r * 0.3, b.y - b.r * 0.3, 0, bx, b.y, b.r);
+            bg2.addColorStop(0,   'rgba(200,240,255,0.7)');
+            bg2.addColorStop(0.4, 'rgba(80,180,220,0.15)');
+            bg2.addColorStop(1,   'rgba(10,80,140,0.05)');
 
             ctx.beginPath();
-            ctx.arc(x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = bubbleGrad;
+            ctx.arc(bx, b.y, b.r, 0, Math.PI * 2);
+            ctx.fillStyle = bg2;
             ctx.fill();
-            ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+            ctx.strokeStyle = 'rgba(180,230,255,0.3)';
             ctx.lineWidth = 0.5;
             ctx.stroke();
 
-            // Reflet sur la bulle
+            // Reflet
             ctx.beginPath();
-            ctx.arc(x - p.r * 0.3, p.y - p.r * 0.3, p.r * 0.25, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,0.7)';
+            ctx.arc(bx - b.r * 0.32, b.y - b.r * 0.32, b.r * 0.22, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,255,255,0.75)';
             ctx.fill();
 
             ctx.restore();
         });
 
-        // --- Poissons ambiants ---
+        // Poissons ambiants
         fishes.forEach(f => {
-            f.x    += f.speed;
-            f.bob  += f.bobSpeed;
-            const y = f.y + Math.sin(f.bob) * 8;
+            f.x   += f.spd;
+            f.bob += f.bobSpd;
+            const fy = f.y + Math.sin(f.bob) * 7;
 
-            if (f.x > 1960)  f.x = -60;
-            if (f.x < -60)   f.x = 1960;
+            if (f.x > 1980)  f.x = -60;
+            if (f.x < -60)   f.x = 1980;
 
             ctx.save();
-            ctx.globalAlpha = f.opacity;
+            ctx.globalAlpha = f.alpha;
             ctx.font = `${f.size}px serif`;
             ctx.textBaseline = 'middle';
-            if (f.speed < 0) {
+
+            if (f.spd < 0) {
+                ctx.save();
                 ctx.scale(-1, 1);
-                ctx.fillText(f.emoji, -f.x, y);
+                ctx.fillText(f.emoji, -f.x, fy);
+                ctx.restore();
             } else {
-                ctx.fillText(f.emoji, f.x, y);
+                ctx.fillText(f.emoji, f.x, fy);
             }
             ctx.restore();
         });
 
-        requestAnimationFrame(draw);
+        requestAnimationFrame(frame);
     }
 
-    draw();
-}
-
-// ============================================================
-//  BULLES WEBCAM
-// ============================================================
-
-function initWebcamBubbles() {
-    const container = document.getElementById('bubbles-container');
-    if (!container) return;
-    if (window.bubbleInterval) clearInterval(window.bubbleInterval);
-
-    function createBubble() {
-        const b = document.createElement('div');
-        b.classList.add('bubble');
-        const size = Math.random() * 22 + 6;
-        b.style.width  = `${size}px`;
-        b.style.height = `${size}px`;
-        let left = 5 + Math.random() * 85;
-        if (left > 25 && left < 75) left = Math.random() > 0.5 ? 5 + Math.random() * 20 : 75 + Math.random() * 15;
-        b.style.left = `${left}%`;
-        const dur  = Math.random() * 4 + 3;
-        const del  = Math.random() * 2;
-        const wob  = Math.random() * 2 + 2;
-        b.style.animation = `floatUp ${dur}s ease-in forwards ${del}s, wobble ${wob}s ease-in-out infinite alternate ${del}s`;
-        container.appendChild(b);
-        setTimeout(() => b.remove(), (dur + 2) * 1000);
-    }
-
-    window.bubbleInterval = setInterval(createBubble, 220);
-}
-
-// ============================================================
-//  BULLES DORÉES (sub)
-// ============================================================
-
-function spawnSubBubbles() {
-    const container = document.getElementById('gold-bubbles-container');
-    if (!container) return;
-    let count = 0;
-    const iv = setInterval(() => {
-        for (let i = 0; i < 3; i++) {
-            const b = document.createElement('div');
-            b.classList.add('bubble', 'gold');
-            const size = Math.random() * 18 + 8;
-            b.style.width  = `${size}px`;
-            b.style.height = `${size}px`;
-            b.style.left   = `${45 + Math.random() * 10}%`;
-            b.style.bottom = '10px';
-            const dur = Math.random() * 2 + 2;
-            const del = Math.random() * 0.4;
-            const wob = Math.random() * 1 + 1;
-            b.style.animation = `floatUp ${dur}s ease-out forwards ${del}s, wobble ${wob}s ease-in-out infinite alternate ${del}s`;
-            container.appendChild(b);
-            setTimeout(() => b.remove(), (dur + 2) * 1000);
-        }
-        count++;
-        if (count > 15) clearInterval(iv);
-    }, 60);
+    frame();
 }
 
 // ============================================================
 //  CHATBOX
 // ============================================================
 
-const chatMessages = document.getElementById('chat-messages');
+const chatEl = document.getElementById('chat-messages');
 
 function getUserColor(username) {
-    let hash = 0;
-    for (let i = 0; i < username.length; i++) hash = username.charCodeAt(i) + ((hash << 5) - hash);
-    return USER_COLORS[Math.abs(hash) % USER_COLORS.length];
+    let h = 0;
+    for (let i = 0; i < username.length; i++) h = username.charCodeAt(i) + ((h << 5) - h);
+    return USER_COLORS[Math.abs(h) % USER_COLORS.length];
 }
 
-function addChatMessage(user, message, flags) {
-    const isMod = flags && flags.mod;
-    const isSub = flags && flags.subscriber;
-    const isVip = flags && flags.vip;
-    const color    = (user.color) ? user.color : getUserColor(user.username || 'anon');
+function addMessage(user, message, flags) {
+    const isMod = flags?.mod;
+    const isSub = flags?.subscriber;
+    const isVip = flags?.vip;
+    const color    = user.color || getUserColor(user.username || 'anon');
     const username = user.displayName || user.username || 'Anon';
 
     const el = document.createElement('div');
     el.classList.add('chat-message');
     if (isSub) el.classList.add('is-sub');
-    if (isMod) el.classList.add('is-mod');
     el.style.setProperty('--user-color', color);
 
     let badges = '';
@@ -294,27 +251,92 @@ function addChatMessage(user, message, flags) {
     if (isSub) badges += '<span class="chat-badge sub">SUB</span>';
     if (isVip) badges += '<span class="chat-badge vip">VIP</span>';
 
-    const safe = message.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const safe = message
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
 
     el.innerHTML = `
-        <div class="chat-avatar" style="background:${color};">${username.charAt(0).toUpperCase()}</div>
+        <div class="chat-avatar" style="background:${color}">${username[0].toUpperCase()}</div>
         <div class="chat-content">
             <div class="chat-username">${badges}${username}</div>
             <div class="chat-text">${safe}</div>
         </div>`;
 
-    chatMessages.appendChild(el);
+    chatEl.appendChild(el);
 
-    const all = chatMessages.querySelectorAll('.chat-message');
+    const all = chatEl.querySelectorAll('.chat-message');
     if (all.length > MAX_MESSAGES) {
         const old = all[0];
-        old.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        old.style.transition = 'opacity 0.25s, transform 0.25s';
         old.style.opacity = '0';
-        old.style.transform = 'translateX(-15px)';
-        setTimeout(() => old.remove(), 300);
+        old.style.transform = 'translateX(-10px)';
+        setTimeout(() => old.remove(), 260);
     }
 
-    if (isSub) spawnSubBubbles();
+    if (isSub) spawnGoldBubbles();
+}
+
+// ============================================================
+//  ALERTES FLUIDES
+// ============================================================
+
+let alertTimeout = null;
+
+function showAlert(icon, text) {
+    const zone   = document.getElementById('alert-zone');
+    const iconEl = document.getElementById('alert-icon');
+    const textEl = document.getElementById('alert-text');
+
+    if (!zone) return;
+
+    if (alertTimeout) {
+        clearTimeout(alertTimeout);
+        zone.style.display = 'none';
+    }
+
+    iconEl.textContent = icon;
+    textEl.textContent = text;
+    zone.style.display = 'block';
+
+    const bubble = document.getElementById('alert-bubble');
+    bubble.style.animation = 'none';
+    void bubble.offsetWidth;
+    bubble.style.animation = 'alertPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+
+    alertTimeout = setTimeout(() => {
+        bubble.style.animation = 'alertFade 0.5s ease forwards';
+        setTimeout(() => { zone.style.display = 'none'; }, 500);
+    }, 5000);
+}
+
+// ============================================================
+//  BULLES DORÉES (subs)
+// ============================================================
+
+function spawnGoldBubbles() {
+    const container = document.getElementById('gold-bubbles-container');
+    if (!container) return;
+    let count = 0;
+    const iv = setInterval(() => {
+        for (let i = 0; i < 4; i++) {
+            const b = document.createElement('div');
+            b.classList.add('gold-bubble');
+            const size = Math.random() * 22 + 8;
+            const dur  = Math.random() * 3 + 2.5;
+            b.style.cssText = `
+                width:${size}px; height:${size}px;
+                left:${30 + Math.random() * 280}px;
+                bottom:80px;
+                animation-duration:${dur}s;
+                animation-delay:${Math.random() * 0.3}s;
+            `;
+            container.appendChild(b);
+            setTimeout(() => b.remove(), (dur + 0.5) * 1000);
+        }
+        count++;
+        if (count > 18) clearInterval(iv);
+    }, 55);
 }
 
 // ============================================================
@@ -322,14 +344,14 @@ function addChatMessage(user, message, flags) {
 // ============================================================
 
 ComfyJS.onChat = (user, message, flags, self, extra) => {
-    addChatMessage(
+    addMessage(
         { username: user, displayName: extra?.displayName || user, color: extra?.userColor },
         message, flags
     );
 };
 
 ComfyJS.onCommand = (user, command, message, flags, extra) => {
-    addChatMessage(
+    addMessage(
         { username: user, displayName: extra?.displayName || user, color: extra?.userColor },
         `!${command} ${message}`, flags
     );
@@ -342,26 +364,19 @@ ComfyJS.Init(TWITCH_CHANNEL);
 // ============================================================
 
 window.addEventListener('onEventReceived', function (obj) {
-    if (!obj.detail || !obj.detail.event) return;
+    if (!obj.detail?.event) return;
     const listener = obj.detail.listener;
     const name = obj.detail.event.name || 'Quelqu\'un';
 
     if (listener === 'follower-latest') {
         document.getElementById('last-follower').textContent = name;
-        addChatMessage(
-            { username: '🎣 Nouveau Follow !', color: '#2087B5' },
-            `${name} vient de follow ! Bienvenue dans l'aquarium 🐟`, {}
-        );
+        showAlert('🎣', `${name} vient de follow ! Bienvenue 🐟`);
     }
 
     if (listener === 'subscriber-latest') {
         document.getElementById('last-sub').textContent = name;
-        addChatMessage(
-            { username: '⭐ Nouveau Sub !', color: '#FFD700' },
-            `${name} vient de sub ! Merci pour le poisson 🐠✨`,
-            { subscriber: true }
-        );
-        spawnSubBubbles();
+        showAlert('⭐', `${name} vient de sub ! Merci du fond de l'aquarium 🐠`);
+        spawnGoldBubbles();
     }
 });
 
@@ -370,8 +385,7 @@ window.addEventListener('onEventReceived', function (obj) {
 // ============================================================
 
 function init() {
-    initBgCanvas();
-    initWebcamBubbles();
+    initAquarium();
 }
 
 document.addEventListener('DOMContentLoaded', init);
